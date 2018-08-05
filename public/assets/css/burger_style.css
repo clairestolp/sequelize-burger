@@ -1,0 +1,40 @@
+
+html{
+    background-image: url('../img/OT8PER0.jpg');
+    background-size: 150%;
+    background-attachment: fixed;
+}
+
+h1, h2, h3, button{
+    font-family: 'Archivo Black';
+    color: #fff;
+}
+
+p, h4, h5, h6{
+    font-family: 'Indie Flower';
+    color: #fff;
+}
+
+.corners-rounded{
+    border-radius: 5px;
+}
+
+.has-margins-sm {
+    margin: 10px;
+}
+
+.outlined {
+    border: solid 2px white;
+    padding: 10px;
+}
+
+
+.burger-text{
+    font-size: 2rem;
+}
+
+.logo{
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+}

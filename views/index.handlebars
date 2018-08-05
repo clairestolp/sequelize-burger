@@ -1,0 +1,48 @@
+<!--Banner, add new burger-->
+<section class="is-hero">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-1 has-text-white has-text-centered">EAT DA BURGER</h1>
+            <img class="image logo" src="/assets/img/burger-logo2.png" alt="">
+            
+            <div class="field is-grouped is-grouped-centered">
+                <div class="control">
+                    <input type="text is-primary" class="input" id="newBurger">
+                </div>
+                <div class="control">
+                    <button class="button is-primary" id="add">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--burgers displayed here-->
+<section class="container">
+
+    <div class="columns">
+
+        <div class="column is-half has-text-centered">
+            <h2 class="title is-3 has-text-white">SERVED</h2>
+            {{#each burgers}}
+                {{#unless devoured}}
+                    {{> burger}}
+                {{/unless}} 
+            {{/each}}
+        </div>
+
+        <div class="column is-half has-text-centered">
+            <h2 class="title is-3 has-text-white">DEVOURED</h2>
+            {{#each burgers}}
+                {{#if devoured}}
+                    {{> burger}}
+                {{/if}}
+            {{/each}}
+        </div> 
+        
+    </div>
+        
+    
+
+</section>
+

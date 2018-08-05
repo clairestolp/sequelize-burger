@@ -1,0 +1,35 @@
+<div>
+    <div class="corners-rounded outlined has-margins-sm">
+        <div>
+            <div class="level">
+                <div class="level-left">
+
+                    <div class="level-item">
+                        <img class="image is-48x48" src="/assets/img/burger.png" alt="">
+                    </div>
+                </div>
+
+                <div class="level-item has-text-centered">
+                    <h4 class="burger-text has-text-white">{{burger_name}}</h4>
+                </div>
+
+                <div class="level-right">
+
+                    <div class="level-item">
+
+                        {{#unless devoured}}
+                            <button class="devour button is-outlined is-primary" data-id={{id}} data-devoured={{devoured}}>Devour!</button>
+                        {{/unless}}
+                    
+                    </div>
+
+                    <div class="level-item">
+                        <button class="button is-outlined is-danger deleteBtn" data-id={{id}}>Delete</button>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
