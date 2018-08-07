@@ -5,10 +5,10 @@ $(function () {
         let devoured = $(this).attr('data-devoured');
         if(devoured === "false") {
             //'1' sets devoured to true
-            devoured = "1"
+            devoured = true;
         }else{
             //'0' sets devoured to false
-            devoured = "0"
+            devoured = false;
         }
         $.ajax(url, {
             type: 'PUT',
@@ -20,11 +20,30 @@ $(function () {
 
     $('#add').on('click', function () {
         const newBurger = $('#newBurger').val().trim();
+        const customer = $('#customer').val().trim().toLowerCase();
         $.ajax('api/burgers', {
             type: 'POST',
-            data: {burger: newBurger}
+            data: {
+                burger: newBurger
+            }
         }).then(function () {
-            location.reload();
+            console.log('Success: new entry added for burgers');
+        });
+
+        /**
+         * find out if customer exists
+         * true: update foreign key
+         * false: create new customer associate foreign key
+         */
+        
+        const customerQuery = 'api/customers/' + customer;
+        $.ajax(customerQuery, {
+            type: 'GET',
+            data: {
+                customerName: customer
+            }
+        }).then((customer) => {
+            console.log(customer);
         });
 
     });

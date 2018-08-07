@@ -1,76 +1,67 @@
-const express = require('express');
-const burger = require('../models/burger');
+const db = require('../models');
 
-const router = express.Router();
+module.exports = (app) => {
 
-//home
-router.get('/', function (req, res) {
-    burger.all(function(results){
+    //Render home
+    app.get('/', (req, res) => {
+        db.Burger.findAll({}).then((burgers) => {
+            const obj = {burgers: burgers};
 
-        results.forEach(function(val){
-            if(val.devoured === 1) {
-                val.devoured = true;
-            }else{
-                val.devoured = false;
-            }
+            res.render('index', obj);
         });
-        
-        obj = { 
-            burgers: results
-        }
-        res.render('index', obj);
     });
-    
-});
 
-//get all burgers
-router.get('/api/burgers', function (req, res) {
-    burger.all(function(results){
-        console.log(results);
-        res.json(results);
+    //GET one burger
+    app.get('/api/burgers/:id?', (req, res) => {
+        const id = req.params.id;
+        db.Burger.findOne({
+            where: {id: id}
+        }).then((burger) => {
+            res.json(burger);
+        });
     });
-});
 
-//get one burger
-router.get('/api/burgers/:burger?', function (req, res) {
-    
-});
-
-//create new burger
-router.post('/api/burgers', function (req, res) {
-    const newBurger = req.body.burger;
-    burger.create(newBurger, function (results) {
-        res.json(results);
+    //GET all burgers
+    app.get('/api/burgers', (req, res) => {
+        db.Burger.findAll({ include: [ db.Customer ]}).then((burgers) => {
+            res.json(burgers);
+        });
     });
-});
 
-//update burger
-router.put('/api/burgers/:id?', function(req, res){
-    const condition = 'id=' + req.params.id;
-    const obj = {devoured: req.body.devoured}
-    burger.update(obj, condition, function (result) {
-        
-        if(result.affectedRows === 0){
-            res.status(404).send('Cannot find burger');
-        }else{
-            console.log('Burger', req.params.id, 'was updated!')
-            res.status(200).json(result);
-        }
+    //POST create new burger
+    app.post('/api/burgers', (req, res) => {
+        const newBurger = req.body.burger;
+        db.Burger.create({
+            burger_name: newBurger
+        }).then((burger) => {
+            res.json(burger);
+        });
     });
-});
 
-//delete burger
-router.delete('/api/burgers/:id?', function (req, res) {
-    const condition = 'id=' + req.params.id;
-    burger.delete(condition, function (result) {
-        if(result.affectedRows === 0) {
-            console.log(result);
-            res.status(404).send('Cannot find burger');
-        }else{
-            console.log('Success', req.params.id, 'was deleted');
-            res.status(200).json(result);
-        }
+    //PUT update existing burger
+    app.put('/api/burgers/:id', (req, res) => {
+        db.Burger.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        }).then((updated) => {
+            res.json(updated);
+        });
     });
-});
 
-module.exports = router;
+    app.delete('/api/burgers/:id', (req, res) => {
+        db.Burger.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then((result) => {
+            if(result.affectedRows === 0) {
+                res.status(404).send('Cannot find burger');
+            }else{
+                console.log('Success ', req.params.id, 'was deleted');
+                res.json(result);
+            }
+            
+        });
+    });
+}

@@ -7,7 +7,10 @@
             
             <div class="field is-grouped is-grouped-centered">
                 <div class="control">
-                    <input type="text is-primary" class="input" id="newBurger">
+                    <input type="text is-primary" class="input" id="newBurger" placeholder="Classic Cheeseburger">
+                </div>
+                <div class="control">
+                    <input type="text is-primary" class="input" id="customer" placeholder="John Smith">
                 </div>
                 <div class="control">
                     <button class="button is-primary" id="add">Add</button>
@@ -42,7 +45,22 @@
         
     </div>
         
-    
+</section>
 
+<!--Search Customers-->
+<section class="container">
+    <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+            <input type="text" class="input" id="customerQuery" placeholder="John Smith">
+        </div>
+        <div class="control">
+            <button class="button is-primary" id="findCustomer">Find Customer</button>
+        </div>
+    </div>
+
+    <!--Display Query Results-->
+    <div id="queryResults">
+
+    </div>
 </section>
 

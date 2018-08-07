@@ -1,29 +1,25 @@
-const orm = require('../config/orm');
+'use strict';
 
-const burger = {
-    all: function (cb) {
-        orm.selectAll('burgers', function(res){
-            cb(res);
-        });
-    }, 
+module.exports = function (sequelize, DataTypes) {
+    const Burger = sequelize.define('Burger', {
+        burger_name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        devoured: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
+    });
 
-    create: function (val, cb) {
-        orm.insertOne('burgers', ['burger_name'], val, function(res){
-            cb(res);
+    Burger.associate = function (models) {
+        models.Burger.belongsTo(models.Customer, {
+            onDelete: "CASCADE",
+            foreignKey: {
+                allowNull: false
+            }
         });
-    }, 
+    };
 
-    update: function (obj, condition, cb) {
-        orm.updateOne('burgers', obj, condition, function (res) {
-            cb(res);
-        });
-    },
-
-    delete: function (condition, cb) {
-        orm.deleteOne ('burgers', condition, function(res) {
-            cb(res);
-        });
-    }
+    return Burger;
 }
-
-module.exports = burger;
